@@ -14,6 +14,26 @@ variable "ssm_vpc" {
   type = string
 }
 
+variable "addon_cni_version" {
+  type    = string
+  default = "v1.18.3-eksbuild.2"
+}
+
+variable "addon_coredns_version" {
+  type    = string
+  default = "v1.11.3-eksbuild.1"
+}
+
+variable "addon_kubeproxy_version" {
+  type    = string
+  default = "v1.31.2-eksbuild.3"
+}
+
+variable "addon_metricsserver_version" {
+  type    = string
+  default = "v0.7.2-eksbuild.1"
+}
+
 variable "ssm_public_subnets" {
   type = list(string)
 }
