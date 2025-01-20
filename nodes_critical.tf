@@ -1,7 +1,7 @@
-resource "aws_eks_node_group" "main" {
+resource "aws_eks_node_group" "critical" {
 
   cluster_name    = aws_eks_cluster.main.id
-  node_group_name = aws_eks_cluster.main.id
+  node_group_name = format("%s-critical", aws_eks_cluster.main.id)
 
   node_role_arn = aws_iam_role.eks_nodes_role.arn
 
@@ -15,14 +15,15 @@ resource "aws_eks_node_group" "main" {
     min_size     = lookup(var.auto_scale_options, "min")
   }
 
+  capacity_type = "ON_DEMAND"
+
   labels = {
     "ingress/ready" = "true"
     "capacity/os" = "AMAZON_LINUX"
     "capacity/arch" = "x86_64"
     "capacity/type" = "ON_DEMAND"
+    "severity" = "critical"
   }
-
-  capacity_type = "ON_DEMAND"
 
   tags = {
     "kubernetes.io/cluster/${var.project_name}" = "owned"
