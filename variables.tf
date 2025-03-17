@@ -57,3 +57,11 @@ variable "auto_scale_options" {
 variable "nodes_instance_sizes" {
   type = list(string)
 }
+
+#### Node Groups - Custom
+
+variable "custom_ami" {
+  type = string
+  description = "AMI ID customizada para os nodes"
+  default = "ami-0328ada95e2793e70"
+}
