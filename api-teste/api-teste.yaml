@@ -11,7 +11,7 @@ metadata:
   name: chip
   namespace: chip
 spec:
-  replicas: 2
+  replicas: 100
   selector:
     matchLabels:
       app: chip
@@ -22,6 +22,31 @@ spec:
         name: chip
         version: v1
     spec:
+      nodeSelector:
+        karpenter.sh/nodepool: soft
+
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: "topology.kubernetes.io/zone"
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app: chip
+            
+      - maxSkew: 1
+        topologyKey: "node.kubernetes.io/instance-type"
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app: chip
+
+      - maxSkew: 1
+        topologyKey: "karpenter.sh/capacity-type"
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app: chip
+
       containers:
       - name: chip
         image: fidelissauro/chip:v1
@@ -78,23 +103,3 @@ spec:
   selector:
     app: chip
   type: ClusterIP
----
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: chip
-  namespace: chip
-spec:
-  maxReplicas: 6
-  minReplicas: 2
-  metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 60
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: chip 

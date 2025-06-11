@@ -33,3 +33,27 @@ ssm_pods_subnets = [
   "/linuxtips-vpc/subnets/private/us-east-1b/linuxtips-pods-1b",
   "/linuxtips-vpc/subnets/private/us-east-1c/linuxtips-pods-1c",
 ]
+
+karpenter_capacity = [
+  {
+    name               = "soft"
+    workload           = "soft"
+    ami_family         = "AL2023"
+    ami_ssm            = "/aws/service/eks/optimized-ami/1.31/amazon-linux-2023/x86_64/standard/recommended/image_id"
+    instance_family    = ["t3"]
+    instance_sizes     = ["medium", "large"]
+    capacity_type      = ["spot"]
+    availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  },
+  {
+    name               = "critical"
+    workload           = "critical"
+    ami_family         = "AL2023"
+    ami_ssm            = "/aws/service/eks/optimized-ami/1.31/amazon-linux-2023/x86_64/standard/recommended/image_id"
+    instance_family    = ["t3"]
+    instance_sizes     = ["large", "xlarge"]
+    capacity_type      = ["on-demand"]
+    availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  }
+
+]
