@@ -70,3 +70,13 @@ variable "karpenter_capacity" {
     availability_zones = list(string)
   }))
 }
+
+variable "dns_name" {
+  type = string
+  default = "*.jonomait.com"
+}
+
+variable "route53_hosted_zone" {
+  type = string
+  default = "Z0710595KH4ZHP0U8YKN"
+}
