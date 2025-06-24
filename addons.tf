@@ -31,14 +31,14 @@ resource "aws_eks_addon" "kubeproxy" {
   depends_on = [aws_eks_access_entry.nodes]
 }
 
-resource "aws_eks_addon" "metricsserver" {
-  cluster_name = aws_eks_cluster.main.name
-  addon_name   = "metrics-server"
+# resource "aws_eks_addon" "metricsserver" {
+#   cluster_name = aws_eks_cluster.main.name
+#   addon_name   = "metrics-server"
 
-  addon_version               = var.addon_metricsserver_version
-  resolve_conflicts_on_create = "OVERWRITE"
-  resolve_conflicts_on_update = "OVERWRITE"
+#   addon_version               = var.addon_metricsserver_version
+#   resolve_conflicts_on_create = "OVERWRITE"
+#   resolve_conflicts_on_update = "OVERWRITE"
 
-  depends_on = [aws_eks_access_entry.nodes]
-}
+#   depends_on = [aws_eks_access_entry.nodes]
+# }
 
